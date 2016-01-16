@@ -75,11 +75,11 @@ values."
 ;; Press <SPC> T n to cycle to the next theme in the list (works great
 ;; with 2 themes variants, one dark and one light)
 		dotspacemacs-themes '(
-			;; monokai
 			spacemacs-dark
-			;; spacemacs-light
 			solarized-light
-			solarized-dark
+			monokai
+			;; spacemacs-light
+			;; solarized-dark
 			;; leuven
 			;; zenburn
 		)
@@ -87,8 +87,8 @@ values."
 		dotspacemacs-colorize-cursor-according-to-state t
 ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
 ;; size to make separators look not too crappy.
-		dotspacemacs-default-font '(	"Ubuntu mono"
-						:size 16
+		dotspacemacs-default-font '(	"Source Code Pro"
+						:size 14
 						:weight normal
 						:width normal
 						:powerline-scale 1.1
@@ -253,6 +253,7 @@ values."
 	;; gk, H or C-k page up
 	;; gj, L or C-j page down
 	;; This command is weird. Up is actually down and vice-versa
+	;; Personal note: it probably makes more sense to press Caps Lock + G than Shift + H or gk or Control + k
 	(define-key evil-normal-state-map (kbd "gj")		'scroll-up-command)
 	(define-key evil-normal-state-map (kbd "gk")		'scroll-down-command)
 	(define-key evil-normal-state-map (kbd "L")		'scroll-up-command)

@@ -1,11 +1,18 @@
 " Leonard Henry Phelan IV
 
-" Airline patched fonts
-source ~/.nvim/airline.vim
+let g:airline_symbols = {}
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
 " Not complain about mixed indent with multiline comments
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
-source ~/.nvim/plug.vim
+" source ~/.nvim/plug.vim
 
 call plug#begin ('~/.nvim/bundle')
 
@@ -30,6 +37,8 @@ Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'vim-scripts/Wombat'
 Plug 'mhinz/vim-startify'
 call plug#end ()
+
+set t_Co=256
 
 syntax on
 
