@@ -36,6 +36,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'vim-scripts/Wombat'
 Plug 'mhinz/vim-startify'
+" Plug 'Valloric/YouCompleteMe'
 call plug#end ()
 
 set t_Co=256
@@ -52,21 +53,21 @@ nnoremap <F2> :call Themetoggle ()<cr>
 let g:themetogglevar=0
 function! Themetoggle ()
 	if g:themetogglevar==0
-		let g:themetogglevar=1
+		let g:themetogglevar=2
 		" PaperColor dark
 		set background=dark
 		colorscheme PaperColor
 		AirlineTheme badwolf
 		echo 'Theme changed: "PaperColor dark"'
 	else
-		if g:themetogglevar==1
-			let g:themetogglevar=2
-			" Solarized light
-			set background=light
-			AirlineTheme solarized
-			colorscheme solarized
-			echo 'Theme changed: "Solarized light"'
-		else
+		" if g:themetogglevar==1
+		" 	let g:themetogglevar=2
+		" 	" Solarized light
+		" 	set background=light
+		" 	AirlineTheme solarized
+		" 	colorscheme solarized
+		" 	echo 'Theme changed: \"Solarized light"'
+		" else
 			if g:themetogglevar==2
 				let g:themetogglevar=0
 				" Papercolor light
@@ -75,7 +76,7 @@ function! Themetoggle ()
 				AirlineTheme PaperColor
 				echo 'Theme changed: "Papercolor light"'
 			endif
-		endif
+		" endif
 	endif
 endfunction
 
@@ -192,24 +193,24 @@ nmap ) <Plug>yankstack_substitute_newer_paste
 nnoremap Y) :reg<CR>
 nnoremap Y( :Yanks<CR>
 
-" " ;\ to create a group
-" cnoremap ;\ \(\)<Left><Left>
+" g\ to create a group
+cnoremap g\ \(\)<Left><Left>
 
-" Better way to do what ^that^ does
-" Similar to more modern regex
-cnoremap (	\(
-cnoremap )	\)
-cnoremap (<BS>	(
-cnoremap )<BS>	)
-" Now with similar functionality for
-" word boundries
-cnoremap <	\<
-cnoremap >	\>
-cnoremap <<BS>	<
-cnoremap ><BS>	>
-" And range braces
-cnoremap {	\{
-cnoremap {<BS>	{
+" " Better way to do what ^that^ does
+" " Similar to more modern regex
+" cnoremap (	\(
+" cnoremap )	\)
+" cnoremap (<BS>	(
+" cnoremap )<BS>	)
+" " Now with similar functionality for
+" " word boundries
+" cnoremap <	\<
+" cnoremap >	\>
+" cnoremap <<BS>	<
+" cnoremap ><BS>	>
+" " And range braces
+" cnoremap {	\{
+" cnoremap {<BS>	{
 
 " g[ puts a space between function and args:
 " 	abs(17); -> abs (17);
