@@ -1,5 +1,30 @@
 " Leonard Henry Phelan IV
 
+" """""""""""""""""""""""""""""""""
+" Plugins
+" """""""""""""""""""""""""""""""""
+call plug#begin ('~/.nvim/bundle')
+" Enhanced Navigation
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'easymotion/vim-easymotion'
+Plug 'wellle/targets.vim'
+Plug 'maxbrunsfeld/vim-yankstack'
+" Themes
+Plug 'altercation/vim-colors-solarized'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'bling/vim-airline'
+Plug 'tpope/vim-surround'
+" External Interface
+Plug 'jplaut/vim-arduino-ino'
+Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-startify'
+call plug#end ()
+cnoremap pi	PlugInstall
+
+" """""""""""""""""""""""""""""""""
+" Airline
+" """""""""""""""""""""""""""""""""
 set encoding=utf-8
 let g:airline_symbols = {}
 let g:airline_left_sep = ''
@@ -13,37 +38,12 @@ let g:airline_symbols.linenr = ''
 " Not complain about mixed indent with multiline comments
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
-" source ~/.nvim/plug.vim
 
-call plug#begin ('~/.nvim/bundle')
-
-" Plugins!
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-Plug 'easymotion/vim-easymotion'
-Plug 'altercation/vim-colors-solarized'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'bling/vim-airline'
-" Plug 'scrooloose/nerdtree'
-" Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-surround'
-" Plug 'thinca/vim-quickrun'
-" Plug 'christoomey/vim-tmux-navigator'
-Plug 'jplaut/vim-arduino-ino'
-Plug 'wellle/targets.vim'
-" Plug 'nathanaelkane/vim-indent-guides'
-" Plug 'vim-scripts/YankRing.vim'
-Plug 'maxbrunsfeld/vim-yankstack'
-Plug 'vim-scripts/Wombat'
-Plug 'mhinz/vim-startify'
-" Plug 'Valloric/YouCompleteMe'
-call plug#end ()
-
+" """""""""""""""""""""""""""""""""
+" Colors & Themes
+" """""""""""""""""""""""""""""""""
 set t_Co=256
-
 syntax on
-
 " Papercolor color scheme
 set background=light
 colorscheme PaperColor
@@ -62,14 +62,6 @@ function! Themetoggle ()
 		AirlineTheme dark
 		echo 'Theme changed: "PaperColor dark"'
 	else
-		" if g:themetogglevar==1
-		"	let g:themetogglevar=2
-		"	" Solarized light
-		"	set background=light
-		"	AirlineTheme solarized
-		"	colorscheme solarized
-		"	echo 'Theme changed: \"Solarized light"'
-		" else
 		if g:themetogglevar==2
 			let g:themetogglevar=0
 			" Papercolor light
@@ -78,10 +70,12 @@ function! Themetoggle ()
 			AirlineTheme PaperColor
 			echo 'Theme changed: "Papercolor light"'
 		endif
-		" endif
 	endif
 endfunction
 
+" """""""""""""""""""""""""""""""""
+" Numbering & Indentation
+" """""""""""""""""""""""""""""""""
 " <-Those things on the side
 set numberwidth=5
 
@@ -98,6 +92,17 @@ set noexpandtab
 set tabstop=8
 set shiftwidth=8
 
+" Retab a file with g=
+function! Indent ()
+	let winview = winsaveview ()
+	execute 'normal! gg=G'
+	call winrestview (winview)
+endfunction
+nnoremap g= :call Indent ()<CR>
+
+" """""""""""""""""""""""""""""""""
+" Tabs & Windows
+" """""""""""""""""""""""""""""""""
 " Tab shortcuts
 set showtabline=2
 cabbr te tabedit
@@ -105,45 +110,27 @@ cabbr tn tabnew
 cabbr tc tabclose
 cabbr tm tabmove
 
-cnoremap pi	PlugInstall
-
-" You know what it does
-" You know you love it
-cabbr n normal
-cabbr nn %normal
-
-" Map Leader
-let mapleader = ","
-" Easy way into Normal Insert mode
-inoremap ` <C-o>
 " Switch windows easily with \\
 " And do other stuff
 nnoremap \	<C-w>
 nnoremap \\	<C-w>w
 
-" Retab a file with g=
-function! Indent ()
-	let winview = winsaveview ()
-	execute 'normal! gg=G'
-	call winrestview (winview)
-endfunction
 
-function! UnIndent ()
-	let winview = winsaveview ()
-	execute '%s/^\s\+//'
-	call winrestview (winview)
-endfunction
+" """""""""""""""""""""""""""""""""
+" Navigation
+" """""""""""""""""""""""""""""""""
+" Map Leader
+let mapleader = ","
+" Easy way into Normal Insert mode
+inoremap ` <C-o>
 
-nnoremap g= :call Indent ()<CR>
-nnoremap =g :call UnIndent ()<CR>
-
+" Eliminate trailing whitespace
 function! Trailing ()
 	let winvie = winsaveview ()
 	execute '%s/\s\+$//'
 	call winrestview (winview)
 endfunction
-
-nnoremap <Leader>$ :call Trailing
+nnoremap <Leader>a :call Trailing
 
 " J-> Join lines!, K->Split lines!
 nnoremap K i <cr><esc>^mwgk:silent! s/\v +$//<cr>:noh <cr>j0
@@ -160,17 +147,19 @@ nnoremap <space> :
 " Set easymotion leader to "-"
 map - <Plug>(easymotion-prefix)
 " Easymotion letter order coresponds to QWERTY
-let g:EasyMotion_keys = 'aoeuhtnsid1234567890'',.pyfgcrl;qjkxbmwvzh'
+let g:EasyMotion_keys = 'aoeuhtnsid1234567890'',.pyfgcrl;qjkxbmwvz'
 " Easymotion search smartcase
 let g:EasyMotion_smartcase = 1
 
+" """""""""""""""""""""""""""""""""
+" Searching
+" """""""""""""""""""""""""""""""""
 " Searching
 set smartcase
 " Highlight all results
 set hlsearch
 " Start searching before enter is pressed
 set incsearch
-set gdefault
 " Don't wrap, make fstab readable
 set nowrap
 " Why would I ever replace something on just one line?
@@ -197,30 +186,6 @@ nmap ) <Plug>yankstack_substitute_newer_paste
 nnoremap Y) :reg<CR>
 nnoremap Y( :Yanks<CR>
 
-" g\ to create a group
-cnoremap g\ \(\)<Left><Left>
-
-" " Better way to do what ^that^ does
-" " Similar to more modern regex
-" cnoremap (	\(
-" cnoremap )	\)
-" cnoremap (<BS>	(
-" cnoremap )<BS>	)
-" " Now with similar functionality for
-" " word boundries
-" cnoremap <	\<
-" cnoremap >	\>
-" cnoremap <<BS>	<
-" cnoremap ><BS>	>
-" " And range braces
-" cnoremap {	\{
-" cnoremap {<BS>	{
-
-" g[ puts a space between function and args:
-"	abs(17); -> abs (17);
-" g] opposite
-nnoremap g[ :%s/\(\a\)\([<{(]\)/\1 \2<CR>
-nnoremap g] :%s/\(\a\)\s*\([(<{]\)/\1\2/<CR>:noh<CR>
 
 " Quickly press ht to exit to normal mode
 " Better suited to Dvorak keyboards
@@ -233,18 +198,21 @@ nnoremap H <C-b>
 nnoremap gj <C-f>
 nnoremap gk <C-b>
 
-" ^ goes to the first non-whitespace character
-" It's way more useful than 0, which is easier to type
-" I flip'd them
+" Swap 0 and ^
+" ^ is much more useful, but difficult to reach
 nnoremap 0 ^
 nnoremap ^ 0
 
-" I dare you to press <F9>
-nnoremap <F9> :!eject<CR><CR>
-" More prankster shtuff
-" nnoremap w ggdG
-" nnoremap w :!eject<CR><CR>
-
+" """""""""""""""""""""""""""""""""
+" Ex Commands & Ex Mode + S&R
+" """""""""""""""""""""""""""""""""
+" g\ to create a group
+cnoremap g\ \(\)<Left><Left>
+" Don't require /g at the end of every S&R
+set gdefault
+" Execute normal commands from ex prompt
+cabbr n normal
+cabbr nn %normal
 " What does gq do anyway?
 " Yes, I sometimes use ex
 nnoremap gq gQ
